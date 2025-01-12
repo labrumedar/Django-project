@@ -6,6 +6,8 @@ class GeneralStatistics(models.Model):
     html_table = models.TextField(verbose_name="HTML таблица")  # Сохраняем HTML-код таблицы
     graph_image = models.ImageField(upload_to="graphs/", null=True, blank=True, verbose_name="График (PNG)")  # График
 
+    objects = models.Manager()
+
     class Meta:
         verbose_name = "Раздел статистики"
         verbose_name_plural = "Разделы статистики"
