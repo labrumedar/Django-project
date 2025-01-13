@@ -1,4 +1,4 @@
-{% extends 'main/base.html' %}
+{{% extends 'main/base.html' %}
 
 {% block title %}География{% endblock %}
 
@@ -23,7 +23,7 @@
             font-size: 1.5em;
         }
 
-        /* Контейнер для таблицы и графика */
+        /* Контейнер для графика и таблицы */
         .content-row {
             display: flex; /* Расположение в строку */
             justify-content: space-between; /* Равномерное распределение */
@@ -81,11 +81,18 @@
             box-sizing: border-box; /* Учитываем отступы в размерах */
         }
 
-        /* Для диаграмм */
-        .chart-container {
-            position: relative;
-            height: 300px;
-            width: 300px;
+        /* График */
+        img {
+            max-width: 100%; /* Изображение не выходит за пределы контейнера */
+            max-height: 500px; /* Увеличенная максимальная высота графика */
+            object-fit: contain; /* Сохраняем пропорции изображения */
+            transition: transform 0.3s ease; /* Анимация для увеличения */
+        }
+
+        /* Увеличение графика при наведении */
+        img:hover {
+            transform: scale(1.1); /* Увеличение на 10% */
+            cursor: pointer; /* Изменение курсора на указатель */
         }
     </style>
 
@@ -102,42 +109,14 @@
                     {{ section.html_table | safe }}
                 </div>
 
-                <!-- Круговая диаграмма -->
-                {% if section.html_table %}
+                <!-- График -->
+                {% if section.graph_image %}
                     <div class="graph-container">
-                        <div class="chart-container">
-                            <canvas id="pieChart{{ forloop.counter }}"></canvas>
-                        </div>
-                        <script>
-                            const ctx = document.getElementById('pieChart{{ forloop.counter }}').getContext('2d');
-                            new Chart(ctx, {
-                                type: 'pie',
-                                data: {
-                                    labels: ['Город 1', 'Город 2', 'Город 3', 'Город 4'],  // Замените на данные из вашего контекста
-                                    datasets: [{
-                                        label: 'Доля вакансий по городам',
-                                        data: [25, 35, 20, 20],  // Замените на данные из вашего контекста
-                                        backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56'],
-                                        hoverOffset: 4
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            position: 'top',
-                                        },
-                                        tooltip: {
-                                            callbacks: {
-                                                label: function(tooltipItem) {
-                                                    return tooltipItem.label + ': ' + tooltipItem.raw + '%';
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            });
-                        </script>
+                        <img src="{{ section.graph_image.url }}" alt="Graph Image">
+                    </div>
+                {% else %}
+                    <div class="graph-container">
+                        <p style="text-align: center;">График отсутствует</p>
                     </div>
                 {% endif %}
             </div>
