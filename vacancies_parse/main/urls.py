@@ -6,7 +6,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', views.index, name='index'),
     path('general_statistics', views.general_statistics, name='general_statistics'),
-    path('demand_page', views.demand_page, name='demand_page')
+    path('demand_page', views.demand_page, name='demand_page'),
+    path('geography_statistics', views.geography_statistics, name='geography_statistics')
 ]
 
 if settings.DEBUG:

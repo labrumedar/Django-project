@@ -1,0 +1,148 @@
+{% extends 'main/base.html' %}
+
+{% block title %}География{% endblock %}
+
+{% block content %}
+    <style>
+        /* Основной стиль карточки */
+        .card {
+            border: 1px solid #ccc; /* Тонкая серая рамка */
+            border-radius: 8px; /* Скругленные углы */
+            padding: 16px; /* Отступ внутри карточки */
+            margin-bottom: 16px; /* Расстояние между карточками */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Легкая тень */
+            background-color: #fff; /* Белый фон */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Заголовок карточки */
+        .card h3 {
+            margin-top: 0;
+            text-align: center; /* Выравнивание заголовка по центру */
+            font-size: 1.5em;
+        }
+
+        /* Контейнер для таблицы и графика */
+        .content-row {
+            display: flex; /* Расположение в строку */
+            justify-content: space-between; /* Равномерное распределение */
+            align-items: center; /* Центрирование по вертикали */
+            gap: 16px; /* Расстояние между элементами */
+        }
+
+        /* Таблица: минимальная ширина */
+        .table-container {
+            flex: 1; /* Таблица занимает минимум места */
+            max-width: 20%; /* Уменьшение ширины таблицы */
+            overflow-x: auto; /* Горизонтальная прокрутка для длинных таблиц */
+            max-height: 400px; /* Ограничение высоты таблицы */
+            padding-left: 50px; /* Добавлен отступ слева для таблицы */
+        }
+
+        table {
+            width: 100%; /* Растягиваем на всю ширину контейнера */
+            border-collapse: collapse; /* Убираем лишние пробелы между границами */
+            font-size: 0.8em; /* Уменьшенный шрифт для компактности */
+            background-color: #f9f9f9; /* Легкий фон */
+            border-radius: 8px; /* Скругленные углы */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Легкая тень */
+        }
+
+        table th, table td {
+            padding: 8px 10px; /* Внутренний отступ */
+            border: 1px solid #ddd; /* Легкие границы для ячеек */
+            text-align: left; /* Выравнивание текста по левому краю */
+        }
+
+        /* Стиль для заголовков таблицы */
+        table th {
+            background: linear-gradient(135deg, steelblue, #9abad6); /* Темный градиент */
+            color: #fff; /* Белый текст */
+            font-weight: bold; /* Жирный текст */
+            text-transform: uppercase; /* Преобразуем текст в верхний регистр */
+            letter-spacing: 1px; /* Увеличим расстояние между буквами */
+        }
+
+        /* Стиль для строк при наведении */
+        table tr:hover {
+            background-color: #e1f5fe; /* Легкий синий фон при наведении */
+            cursor: pointer; /* Изменение курсора на указатель */
+        }
+
+        /* Контейнер для графика */
+        .graph-container {
+            flex: 3; /* График занимает больше места */
+            display: flex; /* Используем flexbox для центрирования */
+            justify-content: center; /* Центрируем горизонтально */
+            align-items: center; /* Центрируем вертикально */
+            height: 100%; /* График растягивается */
+            padding: 16px; /* Равные отступы сверху и снизу */
+            box-sizing: border-box; /* Учитываем отступы в размерах */
+        }
+
+        /* Для диаграмм */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 300px;
+        }
+    </style>
+
+    <h2 style="text-align: center;">География</h2>
+
+    {% for section in sections %}
+        <div class="card">
+            <h3>{{ section.title }}</h3>
+
+            <!-- Контейнер для таблицы и графика -->
+            <div class="content-row">
+                <!-- Таблица -->
+                <div class="table-container">
+                    {{ section.html_table | safe }}
+                </div>
+
+                <!-- Круговая диаграмма -->
+                {% if section.html_table %}
+                    <div class="graph-container">
+                        <div class="chart-container">
+                            <canvas id="pieChart{{ forloop.counter }}"></canvas>
+                        </div>
+                        <script>
+                            const ctx = document.getElementById('pieChart{{ forloop.counter }}').getContext('2d');
+                            new Chart(ctx, {
+                                type: 'pie',
+                                data: {
+                                    labels: ['Город 1', 'Город 2', 'Город 3', 'Город 4'],  // Замените на данные из вашего контекста
+                                    datasets: [{
+                                        label: 'Доля вакансий по городам',
+                                        data: [25, 35, 20, 20],  // Замените на данные из вашего контекста
+                                        backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56'],
+                                        hoverOffset: 4
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        tooltip: {
+                                            callbacks: {
+                                                label: function(tooltipItem) {
+                                                    return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        </script>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <p>Нет данных для отображения.</p>
+    {% endfor %}
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import GeneralStatistics, DemandStatistics
+from .models import GeneralStatistics, DemandStatistics, Geography
 
 def index(request):
     return render(request, 'main/index.html')
@@ -20,3 +20,10 @@ def demand_page(request):
         'sections': demand_sections
     }
     return render(request, 'main/demand_page.html', context)
+
+def geography_statistics(request):
+    geography_sections = Geography.objects.all
+    context = {
+        'sections': geography_sections
+    }
+    return render(request, 'main/geography.html', context)
