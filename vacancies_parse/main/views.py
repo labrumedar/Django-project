@@ -15,7 +15,7 @@ def general_statistics(request):
 
 
 def demand_page(request):
-    demand_sections = DemandStatistics.objects.first()
+    demand_sections = DemandStatistics.objects.all
     context = {
         'sections': demand_sections
     }

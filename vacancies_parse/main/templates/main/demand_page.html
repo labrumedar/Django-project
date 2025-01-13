@@ -98,29 +98,34 @@
 
     <h2 style="text-align: center;">Востребованность</h2>
 
-    <!-- Здесь одна карточка для каждого раздела, основанного на данных page -->
-    <div class="card">
-        <h3>{{ page.title }}</h3>
+    <!-- Здесь цикл для каждой секции -->
+    {% for section in sections %}
+        <div class="card">
+            <h3>{{ section.title }}</h3>
 
-        <!-- Контейнер для таблицы и графика -->
-        <div class="content-row">
-            <!-- Таблица -->
-            <div class="table-container">
-                {{ page.html_table | safe }}
+            <!-- Контейнер для таблицы и графиков -->
+            <div class="content-row">
+                <!-- Таблица -->
+                <div class="table-container">
+                    {{ section.html_table | safe }}
+                </div>
+
+                <!-- График 1 -->
+                {% if section.graph_image %}
+                    <div class="graph-container">
+                        <img src="{{ section.graph_image.url }}" alt="Graph Image">
+                    </div>
+                {% endif %}
+
+                <!-- График 2 -->
+                {% if section.graph_image_2 %}
+                    <div class="graph-container">
+                        <img src="{{ section.graph_image_2.url }}" alt="Second Graph Image">
+                    </div>
+                {% endif %}
             </div>
-
-            <!-- График -->
-            {% if page.graph_image %}
-                <div class="graph-container">
-                    <img src="{{ page.graph_image.url }}" alt="Graph Image">
-                </div>
-            {% else %}
-                <div class="graph-container">
-                    <p style="text-align: center;">График отсутствует</p>
-                </div>
-            {% endif %}
         </div>
-    </div>
-
+    {% empty %}
+        <p>Нет данных для отображения.</p>
+    {% endfor %}
 {% endblock %}
-
