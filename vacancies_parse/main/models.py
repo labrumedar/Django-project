@@ -57,3 +57,22 @@ class Skills(models.Model):
 
     def __str__(self):
         return self.title
+
+
+
+class Vacancy(models.Model):
+    title = models.CharField(max_length=255, verbose_name="Название вакансии")
+    description = models.TextField(verbose_name="Описание вакансии", null=True, blank=True)
+    skills = models.TextField(verbose_name="Навыки", null=True, blank=True)
+    company = models.CharField(max_length=255, verbose_name="Компания")
+    salary = models.CharField(max_length=100, verbose_name="Оклад", null=True, blank=True)
+    region = models.CharField(max_length=255, verbose_name="Регион")
+    published_at = models.DateTimeField(verbose_name="Дата публикации")
+
+    class Meta:
+        verbose_name = "Вакансия"
+        verbose_name_plural = "Вакансии"
+        ordering = ['-published_at']
+
+    def __str__(self):
+        return self.title
