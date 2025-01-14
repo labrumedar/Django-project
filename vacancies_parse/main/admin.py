@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import GeneralStatistics, DemandStatistics, Geography
+from .models import GeneralStatistics, DemandStatistics, Geography, Skills
 
 
 # Регистрируем модель в админке
@@ -16,5 +16,10 @@ class DemandStatisticsAdmin(admin.ModelAdmin):
 
 @admin.register(Geography)
 class GeographyAdmin(admin.ModelAdmin):
+    list_display = ('title', 'html_table', 'graph_image')
+    search_fields = ('title',)
+
+@admin.register(Skills)
+class SkillsAdmin(admin.ModelAdmin):
     list_display = ('title', 'html_table', 'graph_image')
     search_fields = ('title',)
