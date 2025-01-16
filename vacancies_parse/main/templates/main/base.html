@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Ваш заголовок{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        header {
+            background-color: steelblue;
+            color: #fff;
+            padding: 30px 10px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-family: 'Source Code Pro', monospace; /* Новый шрифт для IT-тематики */
+        }
+
+        h1 {
+            font-size: 2.5em; /* Увеличение размера шрифта */
+            letter-spacing: 1px; /* Увеличение расстояния между буквами для более современного вида */
+            text-transform: uppercase; /* Сделать заголовок заглавными буквами */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Добавление тени для выделения */
+            color: #e0f7fa; /* Светлый оттенок синего для текста */
+        }
+
+        h2 {
+            font-family: 'Fira Code', 'Source Code Pro', 'Courier New', Courier, monospace;
+            font-size: 1.5em; /* Размер шрифта */
+            font-weight: 500; /* Полужирный шрифт для акцента */
+            line-height: 1.4; /* Удобочитаемость за счет интерлиньяжа */
+            color: #333; /* Темный текст */
+            background-color: #f5f5f5; /* Светло-серый фон для выделения */
+            padding: 10px; /* Внутренний отступ */
+            border-radius: 5px; /* Скругленные углы */
+            border: 1px solid #ddd; /* Легкая рамка */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для объема */
+        }
+
+
+        footer {
+            background-color: steelblue;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        nav {
+            background-color: #f4f4f4;
+            padding: 15px;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            display: block;
+            color: #0056b3;
+            text-decoration: none;
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #e6f2ff;
+            color: #0056b3;
+        }
+
+        main {
+            margin-left: 220px;
+            padding: 20px;
+        }
+
+        .images {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .images img {
+        width: 20%; /* Ширина каждой картинки */
+        height: 300px; /* Фиксированная высота для всех картинок */
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border: 2px solid #e6e6e6;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        object-fit: cover; /* Обрезка изображения с сохранением пропорций */
+    }
+
+
+
+        .images img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                width: 100%;
+                position: static;
+                height: auto;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav a {
+                margin: 5px;
+            }
+
+            main {
+                margin-left: 0;
+            }
+
+            .images img {
+                width: 45%; /* Увеличиваем ширину картинок на мобильных */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Профессии будущего - Тестировщик</h1>
+    </header>
+
+    <nav>
+        <a href="{% url 'index' %}">Главная</a>
+        <a href="{% url 'general_statistics' %}">Общая статистика</a>
+        <a href="{% url 'demand_page' %}">Востребованность</a>
+        <a href="{% url 'geography_statistics' %}">География</a>
+        <a href="{% url 'skills_statistics' %}">Навыки</a>
+        <a href="{% url 'latest_vacancies' %}">Последние вакансии</a>
+    </nav>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        Метелева Дарья Алексеевна, РИ-230936
+    </footer>
+</body>
+</html>
+
